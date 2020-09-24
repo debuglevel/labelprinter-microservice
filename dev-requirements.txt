@@ -1,0 +1,10 @@
+# TODO: add versions.
+# TODO: remove stuff which is probably not needed
+#black
+#mypy
+#flake8
+#requests
+#pytest
+#pytest-cov
+#isort
+#autoflake

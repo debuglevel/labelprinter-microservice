@@ -1,0 +1,12 @@
+# TODO: add versions.
+# TODO: remove stuff which is probably not needed
+fastapi
+uvicorn
+brother_ql
+#sqlalchemy
+#async-exit-stack
+#async-generator
+#passlib[bcrypt]
+#python-jose[cryptography]
+#python-multipart
+#python-dotenv

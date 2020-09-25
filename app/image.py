@@ -49,6 +49,7 @@ def resize_image(image_path: str, destination_width: int):
     """
     logging.debug(f'Resizing image {image_path} to width={destination_width}...')
 
+    # see https://stackoverflow.com/a/451580/4764279
     image = Image.open(image_path)
     wpercent = (destination_width / float(image.size[0]))
     hsize = int((float(image.size[1]) * float(wpercent)))

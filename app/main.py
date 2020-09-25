@@ -151,15 +151,18 @@ def build_print_command(file_png_path: str, printer_model: str, label_type: str,
     logging.debug(f'Built print command: {command}')
     return command
 
+def run_print_command(command):
+    logging.debug(f'Printing with following command: {command} ...')
+
+    result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    logging.debug(result.stdout.decode('utf-8'))
+
+    logging.debug(f'Printed with following command: {command}')
+
 def print_image(file_png_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
     logging.debug(f'Printing image {file_png_path}...')
 
     command = build_print_command(file_png_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
-
-    # Run command
-    logging.debug('Printing with following command: ...')
-    logging.debug(command)
-    result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    logging.debug(result.stdout.decode('utf-8'))
+    run_print_command(command)
 
     logging.debug(f'Printed image {file_png_path}')

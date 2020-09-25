@@ -5,6 +5,7 @@ import brother_ql
 import logging
 import app.print
 import app.image
+import app.health
 
 class Print(BaseModel):
     image_url: str
@@ -25,10 +26,7 @@ async def root():
 
 @app.get("/health")
 async def get_health():
-    """
-    TODO: check if there's something better provided
-    """
-    return {"status": "up"}
+    return app.health.get_health()
 
 @app.get("/models/")
 async def list_models():

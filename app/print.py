@@ -32,14 +32,39 @@ def run_print_command(command):
 
     logging.debug(f'Printed with following command: {command}')
 
+def call_print_api(image_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
+    """
+    Prints an image by calling the brother_ql python API
+    """
+    from brother_ql.conversion import convert
+    from brother_ql.backends.helpers import send
+    from brother_ql.raster import BrotherQLRaster
+
+    raster = BrotherQLRaster(printer_model)
+    raster.exception_on_warning = True
+
+    high_quality = not low_quality
+    threshold = 70
+    rotate = "auto"
+    cut = True
+    dither = False
+    instructions = convert(qlr=raster, images=image_path, label=label_type, cut=cut, dither=dither, compress=compress, red=red, rotate=rotate, dpi_600=high_dpi, hq=high_quality, threshold=threshold)
+
+    blocking = True
+    status = send(instructions=instructions, printer_identifier=printer_url, backend_identifier=printer_backend, blocking=blocking)
+    
+    return status # CAVEAT: network backend does not support readback according to brother_ql internals
+
 def print_image(image_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
     """
     Prints an image
-    image_path can be basically every usual format except SVG.
+    image_path can be basically every usual image format except SVG.
     """
     logging.debug(f'Printing image {image_path}...')
 
     command = build_print_command(image_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
     run_print_command(command)
+
+    status = call_print_api(image_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
 
     logging.debug(f'Printed image {image_path}')

@@ -2,7 +2,8 @@
 # TODO: remove stuff which is probably not needed
 fastapi
 uvicorn
-brother_ql
+brother_ql==0.9.3
+str2bool==1.1
 #sqlalchemy
 #async-exit-stack
 #async-generator

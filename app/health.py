@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+logger = logging.getLogger(__name__)
+
 class Health(BaseModel):
     status: str
 

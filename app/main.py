@@ -6,6 +6,9 @@ import logging
 import app.print
 import app.image
 import app.health
+import app.label
+
+logger = logger.getLogger(__name__)
 
 class PrintRequest(BaseModel):
     image_url: str
@@ -86,16 +89,6 @@ async def post_prints(print: PrintRequest):
     # TODO: report back some data (id, size, needed resize, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
     return print
     #pass
-
-def get_label_width(label: str):
-    """
-    Get width (i.e. printable pixels) of a label type
-    """
-    logging.debug(f"Getting image width for '{label}' labels...")
-    labels = brother_ql.devicedependent.label_type_specs
-    width = labels[label]["dots_printable"][0]
-    logging.debug(f"Got image width for '{label}' labels: {width}")
-    return width
 
 
 

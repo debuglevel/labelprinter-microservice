@@ -25,10 +25,12 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
+    logger.info("Got GET request on /")
     return {"message": "Hello World"}
 
 @app.get("/health")
 async def get_health():
+    logger.info("Got GET request on /health")
     return app.health.get_health()
 
 @app.get("/models/")
@@ -36,6 +38,7 @@ async def list_models():
     """
     List all models supported by brother_ql
     """
+    logger.info("Got GET request on /models/")
     # TODO: use brother_ql.models instead of deprecated  brother_ql.devicedependent
     return brother_ql.devicedependent.models
 
@@ -44,6 +47,7 @@ async def list_labels():
     """
     List all labels supported by brother_ql
     """
+    logger.info("Got GET request on /labels/")
     # TODO: use brother_ql.labels instead of deprecated brother_ql.devicedependent
     return brother_ql.devicedependent.label_type_specs
 
@@ -53,6 +57,7 @@ async def list_printers():
     List all defined printers
     TODO: no idea if we should do that or rely on a printer URL/label/etc defined in the prints request
     """
+    logger.info("Got GET request on /printers/")
     raise NotImplementedError
 
 @app.get("/prints/")
@@ -61,6 +66,7 @@ async def list_prints():
     List all created prints
     TODO: list all prints ever made
     """
+    logger.info("Got GET request on /prints/")
     raise NotImplementedError
 
 @app.get("/prints/{item_id}")
@@ -69,6 +75,7 @@ async def get_print(item_id: int):
     Get a print
     TODO: get data about a print
     """
+    logger.info(f"Got GET request on /prints/{id}")
     raise NotImplementedError
 
 @app.post("/prints/")
@@ -77,6 +84,7 @@ async def post_prints(print: PrintRequest):
     Add a printing job
     TODO: define proper HTTP status code
     """
+    logger.info("Got POST request on /prints/")
     # TODO: check passed parameters (e.g. valid printer model and valid label type)
     # TODO: download image_url to temporary file
     image_path, image_mimetype = download_image(print.image_url)

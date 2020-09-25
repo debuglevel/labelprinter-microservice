@@ -51,15 +51,6 @@ async def list_labels():
     # TODO: use brother_ql.labels instead of deprecated brother_ql.devicedependent
     return brother_ql.devicedependent.label_type_specs
 
-@app.get("/printers/")
-async def list_printers():
-    """
-    List all defined printers
-    TODO: no idea if we should do that or rely on a printer URL/label/etc defined in the prints request
-    """
-    logger.info("Got GET request on /printers/")
-    raise NotImplementedError
-
 @app.get("/prints/")
 async def list_prints():
     """

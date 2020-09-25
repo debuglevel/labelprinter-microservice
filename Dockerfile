@@ -6,18 +6,20 @@ FROM alpine:3.12
 
 WORKDIR /app
 
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PIP_NO_CACHE_DIR 1
+ENV PYTHONUNBUFFERED 1
+
 # CairoSVG needs to compile stuff during its installation
-#RUN apk add --no-cache build-base python3-dev libffi-dev zlib-dev jpeg-dev
 RUN apk add --no-cache python3 python3-dev cmd:pip3 gcc make musl-dev cairo-dev pango-dev gdk-pixbuf libffi-dev zlib-dev jpeg-dev
 
 # Python stuff. I don't know.
 RUN pip3 install wheel
 
 COPY requirements.txt .
-RUN pip3 install  --no-cache-dir -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 COPY . .
 
-ENV PYTHONUNBUFFERED 1
 EXPOSE 8000
 CMD ["uvicorn", "--host=0.0.0.0", "app.main:fastapi"]

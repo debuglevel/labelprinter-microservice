@@ -1,5 +1,4 @@
 import pytest
-#from app.main import get_health
 import app.main
 import os.path
 import PIL

@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from typing import Optional
 from pydantic import BaseModel
-#from str2bool import str2bool
 import brother_ql
 import logging
 import app.print

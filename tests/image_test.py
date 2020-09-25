@@ -19,7 +19,7 @@ async def test_prepare_image():
     """
     Tests that images are prepared correctly
     """
-    for image_path in ["tests/image_large.png", "tests/image_small.png", "tests/image.svg", "tests/image_large.gif", "tests/image_large.jpg", "tests/image_large.webp", "tests/image_large.bmp"]:
+    for image_path in ["tests/resources/image_large.png", "tests/resources/image_small.png", "tests/resources/image.svg", "tests/resources/image_large.gif", "tests/resources/image_large.jpg", "tests/resources/image_large.webp", "tests/resources/image_large.bmp"]:
         #print(f"Current: {image_path}")
         mimetype = "image/svg+xml" if image_path.endswith(".svg") else "image/*"
         prepared_image_path = app.image.prepare_image(image_path, mimetype, 100)
@@ -35,7 +35,7 @@ async def test_resize_image():
     """
     Tests that rastered images are resized correctly
     """
-    for image_path in ["tests/image_large.png", "tests/image_small.png"]:
+    for image_path in ["tests/resources/image_large.png", "tests/resources/image_small.png"]:
         #print(f"Current: {image_path}")
         resized_image_path = app.image.resize_image(image_path, 100)
         assert os.path.exists(resized_image_path)
@@ -51,7 +51,7 @@ async def test_convert_svg_to_png():
     """
     Tests that SVG is converted to PNG
     """
-    png_image_path = app.main.convert_svg_to_png("tests/image.svg", 100)
+    png_image_path = app.main.convert_svg_to_png("tests/resources/image.svg", 100)
     assert os.path.exists(png_image_path)
     assert os.path.getsize(png_image_path) > 0
 

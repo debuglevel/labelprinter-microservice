@@ -1,9 +1,5 @@
 import pytest
-#from app.main import get_health
 import app.print
-import os.path
-import PIL
-import magic
 
 @pytest.mark.asyncio
 async def test_build_print_command():

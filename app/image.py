@@ -7,8 +7,12 @@ import sys
 import os
 
 def download_image(image_url: str):
+    """
+    Download an image to a file
+    """
     logging.debug(f'Downloading image {image_url}...')
 
+    # TODO: NamedTemporaryFile is probably nicer
     temporarydirectory_path = tempfile.mkdtemp()
     image_path = f"{temporarydirectory_path}/file.svg"
     logging.debug(f'Downloading {image_url} to {image_path}...')
@@ -24,6 +28,9 @@ def download_image(image_url: str):
     return image_path
 
 def prepare_image(image_path: str, width: int):
+    """
+    Prepares an image for printing with brother_ql (i.e. converting, resizing).
+    """
     logging.debug(f'Preparing image {image_path}...')
 
     if is_png == False:
@@ -31,7 +38,6 @@ def prepare_image(image_path: str, width: int):
         pass
     else:
         pass
-
     
     # TODO: resize if PNG/raster and not in correct dimensions
     raise NotImplementedError
@@ -39,6 +45,9 @@ def prepare_image(image_path: str, width: int):
     return png_image_path
 
 def convert_svg_to_png(svg_image_path: str, width: int):
+    """
+    Converts a SVG to a PNG file
+    """
     logging.debug(f'Converting SVG {svg_image_path} to PNG...')
 
     png_image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_', suffix='.png', delete=False)

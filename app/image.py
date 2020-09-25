@@ -33,16 +33,17 @@ def prepare_image(image_path: str, width: int):
     """
     logging.debug(f'Preparing image {image_path}...')
 
-    if is_png == False:
+    if is_svg == False:
         # TODO: convert if not a PNG (TODO: dont know whether it actually must be a PNG or just anything PIL can read)
+        # REMARKS: everything except SVG should work.
         pass
     else:
         pass
     
     # TODO: resize if PNG/raster and not in correct dimensions
     raise NotImplementedError
-    logging.debug(f'Prepared image {image_path}: {png_image_path}')
-    return png_image_path
+    logging.debug(f'Prepared image {image_path}: {prepared_image_path}')
+    return prepared_image_path
 
 def convert_svg_to_png(svg_image_path: str, width: int):
     """

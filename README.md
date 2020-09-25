@@ -1,6 +1,6 @@
 # Labelprinter microservice
 
-This is a microservice which wraps around the `brother_ql` python library. It basically consumes a JSON pointing to a PNG file to print it on a Brother QL printer.
+This is a microservice which wraps around the `brother_ql` python library. It basically consumes a JSON pointing to a image file to print it on a Brother QL printer.
 
 ## Cheat sheet
 

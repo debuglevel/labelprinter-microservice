@@ -1,7 +1,7 @@
 import subprocess
 import logging
 
-def build_print_command(file_png_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
+def build_print_command(image_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
     """
     Builds a brother_ql CLI command line which can be run as a subprocess
     """
@@ -15,7 +15,7 @@ def build_print_command(file_png_path: str, printer_model: str, label_type: str,
 
     # TODO: maybe call from library instead of subprocess
     # TODO: maybe brother_ql can read PIL Image instead of files; would prevent writing files
-    command = ['/usr/bin/brother_ql', '--backend', printer_backend, '--model', printer_model, '--printer', printer_url, 'print', red_param, low_quality_param, high_dpi_param, compress_param, '--label', label_type, file_png_path]
+    command = ['/usr/bin/brother_ql', '--backend', printer_backend, '--model', printer_model, '--printer', printer_url, 'print', red_param, low_quality_param, high_dpi_param, compress_param, '--label', label_type, image_path]
     command = list(filter(None.__ne__, command)) # remove "None" from list
 
     logging.debug(f'Built print command: {command}')
@@ -32,13 +32,14 @@ def run_print_command(command):
 
     logging.debug(f'Printed with following command: {command}')
 
-def print_image(file_png_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
+def print_image(image_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
     """
     Prints an image
+    image_path can be basically every usual format except SVG.
     """
-    logging.debug(f'Printing image {file_png_path}...')
+    logging.debug(f'Printing image {image_path}...')
 
-    command = build_print_command(file_png_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
+    command = build_print_command(image_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
     run_print_command(command)
 
-    logging.debug(f'Printed image {file_png_path}')
+    logging.debug(f'Printed image {image_path}')

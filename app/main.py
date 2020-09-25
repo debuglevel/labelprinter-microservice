@@ -79,11 +79,11 @@ async def post_prints(print: Print):
     # TODO: check passed parameters (e.g. valid printer model and valid label type)
     # TODO: download image_url to temporary file
     image_path = download_image(print.image_url)
-    # TODO: check if it's a PNG (maybe do not support SVG because the CairoSVG is just insane in it's size; although it would be nice as a SVG could be rasterized exactly for a label; alternative would be a rather closely coupled request to the other microservice which provides the PNG to provide a perfect sized PNG)
+    
     prepare_image(image_path, width)
-    # TODO: maybe check the PNG size to report back whether resizing was needed
+    # TODO: maybe check the image size to report back whether resizing was needed
     # TODO: save print data to a dictionary or an actual database
-    # TODO: send PNG to printer via brother_ql
+    # TODO: send image to printer via brother_ql
     print.print_image()
     # TODO: report back some data (id, size, needed resize, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
     return print

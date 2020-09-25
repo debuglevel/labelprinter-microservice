@@ -1,0 +1,7 @@
+version: "3"
+services:
+  rest:
+    build: .
+    image: labelprinter-microservice
+    ports:
+      - "80:8000"

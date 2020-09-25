@@ -14,8 +14,10 @@ RUN apk add --no-cache python3 python3-dev cmd:pip3 gcc make musl-dev cairo-dev 
 RUN pip3 install wheel
 
 COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+RUN pip3 install  --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["uvicorn", "app.main:fastapi"]
+ENV PYTHONUNBUFFERED 1
+EXPOSE 8000
+CMD ["uvicorn", "--host=0.0.0.0", "app.main:fastapi"]

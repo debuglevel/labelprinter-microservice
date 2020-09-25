@@ -39,7 +39,7 @@ async def list_models():
     List all models supported by brother_ql
     """
     logger.info("Got GET request on /models/")
-    # TODO: use brother_ql.models instead of deprecated  brother_ql.devicedependent
+    # TODO: use brother_ql.models instead of deprecated brother_ql.devicedependent
     return brother_ql.devicedependent.models
 
 @app.get("/labels/")

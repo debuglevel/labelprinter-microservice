@@ -26,7 +26,7 @@ app = FastAPI()
 @app.get("/")
 async def root():
     logger.info("Got GET request on /")
-    return {"message": "Hello World"}
+    return {"message": "Hello, this is labelprinter-microservice :-)"}
 
 @app.get("/health")
 async def get_health():

@@ -10,6 +10,8 @@ import subprocess
 import tempfile
 import logging
 import requests
+import tempfile
+
 
 class Print(BaseModel):
     image_url: str
@@ -122,12 +124,13 @@ def prepare_image(image_path: str, width: int):
 def convert_svg_to_png(svg_image_path: str, width: int):
     logging.debug(f'Converting SVG {svg_image_path} to PNG...')
 
-    png_image_path = f"{temporarydirectory_path}/file.png"
-    
-    svg2png(open(svg_image_path, 'rb').read(), write_to=open(png_image_path, 'wb'), output_width=width)
+    png_image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_', suffix='.png', delete=False)
+    png_image_path = png_image_file.name
+
+    # TODO: output_width does not seem to work
+    svg2png(open(svg_image_path, 'rb').read(), write_to=png_image_file, output_width=width)
     png_image_size = os.path.getsize(png_image_path)
     
-    raise NotImplementedError
     logging.debug(f'Converted {svg_image_path} to {png_image_path} with resulting size {png_image_size}')
     return png_image_path
 

@@ -7,6 +7,7 @@
 pytest
 pytest-watch
 pytest-asyncio
+python-magic
 #pytest-cov
 #isort
 #autoflake

@@ -2,6 +2,8 @@ import pytest
 #from app.main import get_health
 import app.main
 import os.path
+import PIL
+import magic
 
 @pytest.mark.asyncio
 async def test_health():
@@ -37,6 +39,7 @@ async def test_list_labels():
     assert app.main.get_label_width("29x90") == 306
     assert app.main.get_label_width("62") == 696
 
+@pytest.mark.skip(reason="slow")
 @pytest.mark.asyncio
 async def test_download_image():
     """
@@ -62,7 +65,6 @@ async def test_prepare_image():
         assert width == 100
         assert image_is_png # TODO: only if needed and no other raster images work
 
-@pytest.mark.skip(reason="fails for now")
 @pytest.mark.asyncio
 async def test_convert_svg_to_png():
     """
@@ -71,6 +73,9 @@ async def test_convert_svg_to_png():
     png_image_path = app.main.convert_svg_to_png("tests/image.svg", 100)
     assert os.path.exists(png_image_path)
     assert os.path.getsize(png_image_path) > 0
+
+    mime_type = magic.from_file(png_image_path, mime=True)
+    assert mime_type == "image/png"
 
     image = PIL.Image.open(png_image_path)
     width, height = image.size

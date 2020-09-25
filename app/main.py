@@ -7,7 +7,7 @@ import app.print
 import app.image
 import app.health
 
-class Print(BaseModel):
+class PrintRequest(BaseModel):
     image_url: str
     description: Optional[str] = None
     red: bool
@@ -69,7 +69,7 @@ async def get_print(item_id: int):
     raise NotImplementedError
 
 @app.post("/prints/")
-async def post_prints(print: Print):
+async def post_prints(print: PrintRequest):
     """
     Add a printing job
     TODO: define proper HTTP status code

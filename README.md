@@ -4,35 +4,60 @@ This is a microservice which wraps around the `brother_ql` python library. It ba
 
 ## Cheat sheet
 
-### Initizalize virtual environment
+### Environment
+
+#### Initizalize virtual environment
 
 ```sh
 python3 -m venv env
 ```
 
-### Activate virtual environment
+#### Activate virtual environment
 
 ```sh
 source ./env/bin/activate
 ```
 
-### Install dependencies
+### Dependencies
+
+#### Install dependencies
 
 ```sh
 pip install -r requirements.txt
 ```
 
-### Start development mode
+### Deployment
+
+#### Start development mode
 
 ```sh
-$ uvicorn main:app --reload
+uvicorn main:app --reload
 ```
 
-### Display OpenAPI documentations
+### Documentation
+
+#### Display OpenAPI documentations
 
 http://localhost:8000/docs or http://localhost:8000/redoc
 
-### Label identifiers and their resolution
+### Testing
+
+#### Run tests
+
+```sh
+pytest
+```
+
+#### Run tests on every file change
+
+```sh
+pytest-watch
+pytest-watch -c # clear terminal before pytest runs
+```
+
+### Other
+
+#### Label identifiers and their resolution
 
 ```sh
 $ brother_ql info labels

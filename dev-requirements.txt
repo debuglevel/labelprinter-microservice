@@ -4,7 +4,9 @@
 #mypy
 #flake8
 #requests
-#pytest
+pytest
+pytest-watch
+pytest-asyncio
 #pytest-cov
 #isort
 #autoflake

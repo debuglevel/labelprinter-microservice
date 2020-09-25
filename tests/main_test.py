@@ -29,7 +29,6 @@ async def test_list_labels():
     assert "62" in labels
     assert "29x90" in labels
 
-@pytest.mark.skip(reason="not yet implemented")
 @pytest.mark.asyncio
 async def test_list_labels():
     """

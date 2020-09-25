@@ -82,7 +82,8 @@ async def post_prints(print: Print):
 
 def get_label_width(label: str):
     logging.debug(f"Getting image width for '{label}' labels...")
-    raise NotImplementedError
+    labels = brother_ql.devicedependent.label_type_specs
+    width = labels[label]["dots_printable"][0]
     logging.debug(f"Got image width for '{label}' labels: {width}")
     return width
 

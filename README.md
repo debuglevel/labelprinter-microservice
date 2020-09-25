@@ -31,7 +31,7 @@ pip install -r requirements.txt
 #### Start development mode
 
 ```sh
-uvicorn main:app --reload
+uvicorn app.main:fastapi --reload
 ```
 
 ### Documentation

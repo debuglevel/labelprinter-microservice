@@ -18,3 +18,6 @@ def get_width(label: str):
 def get_all():
     # TODO: use brother_ql.labels instead of deprecated brother_ql.devicedependent
     return brother_ql.devicedependent.label_type_specs
+
+def is_valid(label: str):
+    return label in get_all()

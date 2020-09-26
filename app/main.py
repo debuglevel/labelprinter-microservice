@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from typing import Optional
 from pydantic import BaseModel
 import brother_ql
@@ -74,18 +74,36 @@ async def post_prints(print: PrintRequest):
     TODO: define proper HTTP status code
     """
     logger.info("Got POST request on /prints/")
-    # TODO: check passed parameters (e.g. valid printer model and valid label type)
-    # TODO: download image_url to temporary file
+
+    # check if given printer model and label type are valid
+    if app.model.is_valid(print.printer_model) == False:
+        raise HTTPException(status_code=400, detail=f"printer model '{print.printer_model}' is invalid")
+    if app.label.is_valid(print.label_type) == False:
+        raise HTTPException(status_code=400, detail=f"label type '{print.label_type}' is invalid")
+    
+    # download image to temporary file
     image_path, image_mimetype = app.image.download_image(print.image_url)
     
-    app.image.prepare_image(image_path, image_mimetype, width)
+    # prepare image to be sent to a label printer (TODO: maybe that would be better placed in print_image() itself)
+    prepared_image_path = app.image.prepare_image(image_path, image_mimetype, width)
+
     # TODO: maybe check the image size to report back whether resizing was needed
     # TODO: save print data to a dictionary or an actual database
-    # TODO: send image to printer via brother_ql
-    app.print.print_image()
+
+    # send image to printer
+    status = app.print.print_image(
+        image_path=prepared_image_path,
+        printer_model=print.printer_model,
+        label_type=print.label_type,
+        printer_backend=print.printer_backend,
+        printer_url=print.printer_url,
+        red=print.red,
+        low_quality=print.low_quality,
+        high_dpi=print.high_dpi,
+        compress=print.compress
+    )
     # TODO: report back some data (id, size, needed resize, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
     return print
-    #pass
 
 
 

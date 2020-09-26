@@ -1,3 +1,6 @@
+from brother_ql.conversion import convert
+from brother_ql.backends.helpers import send
+from brother_ql.raster import BrotherQLRaster
 import subprocess
 import logging
 
@@ -32,16 +35,12 @@ def run_print_command(command):
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     logger.debug(result.stdout.decode('utf-8'))
 
-    logger.debug(f'Printed with following command: {command}')
+    logger.debug(f"Printed with following command: {command}; result: {result}")
 
 def call_print_api(image_path: str, printer_model: str, label_type: str, printer_backend: str, printer_url: str, red: bool, low_quality: bool, high_dpi: bool, compress: bool):
     """
     Prints an image by calling the brother_ql python API
     """
-    from brother_ql.conversion import convert
-    from brother_ql.backends.helpers import send
-    from brother_ql.raster import BrotherQLRaster
-
     raster = BrotherQLRaster(printer_model)
     raster.exception_on_warning = True
 
@@ -50,10 +49,14 @@ def call_print_api(image_path: str, printer_model: str, label_type: str, printer
     rotate = "auto"
     cut = True
     dither = False
+    logger.debug(f"Converting image to printing instructions...")
     instructions = convert(qlr=raster, images=image_path, label=label_type, cut=cut, dither=dither, compress=compress, red=red, rotate=rotate, dpi_600=high_dpi, hq=high_quality, threshold=threshold)
+    logger.debug(f"Converted image to printing instructions: {instructions}")
 
     blocking = True
+    logger.debug(f"Sending printing instructions to printer...")
     status = send(instructions=instructions, printer_identifier=printer_url, backend_identifier=printer_backend, blocking=blocking)
+    logger.debug(f"Sent printing instructions to printer: {status}")
     
     return status # CAVEAT: network backend does not support readback according to brother_ql internals
 
@@ -67,6 +70,7 @@ def print_image(image_path: str, printer_model: str, label_type: str, printer_ba
     command = build_print_command(image_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
     run_print_command(command)
 
-    status = call_print_api(image_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
+    #status = call_print_api(image_path, printer_model, label_type, printer_backend, printer_url, red, low_quality, high_dpi, compress)
 
     logger.debug(f'Printed image {image_path}')
+    #return status

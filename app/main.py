@@ -39,8 +39,7 @@ async def list_models():
     List all models supported by brother_ql
     """
     logger.info("Got GET request on /models/")
-    # TODO: use brother_ql.models instead of deprecated brother_ql.devicedependent
-    return brother_ql.devicedependent.models
+    return app.model.get_all()
 
 @fastapi.get("/labels/")
 async def list_labels():
@@ -48,8 +47,7 @@ async def list_labels():
     List all labels supported by brother_ql
     """
     logger.info("Got GET request on /labels/")
-    # TODO: use brother_ql.labels instead of deprecated brother_ql.devicedependent
-    return brother_ql.devicedependent.label_type_specs
+    return app.label.get_all()
 
 @fastapi.get("/prints/")
 async def list_prints():
@@ -78,13 +76,13 @@ async def post_prints(print: PrintRequest):
     logger.info("Got POST request on /prints/")
     # TODO: check passed parameters (e.g. valid printer model and valid label type)
     # TODO: download image_url to temporary file
-    image_path, image_mimetype = download_image(print.image_url)
+    image_path, image_mimetype = app.image.download_image(print.image_url)
     
-    prepare_image(image_path, image_mimetype, width)
+    app.image.prepare_image(image_path, image_mimetype, width)
     # TODO: maybe check the image size to report back whether resizing was needed
     # TODO: save print data to a dictionary or an actual database
     # TODO: send image to printer via brother_ql
-    print.print_image()
+    app.print.print_image()
     # TODO: report back some data (id, size, needed resize, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
     return print
     #pass

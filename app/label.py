@@ -14,3 +14,7 @@ def get_width(label: str):
     
     logger.debug(f"Got image width for '{label}' labels: {width}")
     return width
+
+def get_all():
+    # TODO: use brother_ql.labels instead of deprecated brother_ql.devicedependent
+    return brother_ql.devicedependent.label_type_specs

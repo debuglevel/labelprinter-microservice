@@ -24,3 +24,22 @@ def test_list_labels():
     assert response.status_code == 200
     assert "62" in response.json()
 
+def test_post_prints_with_invalid_model():
+    response = client.post(
+        "/prints/",
+        json = {
+            "model": "INVALID_MODEL"
+        }
+        )
+    assert response.status_code == 400
+    assert "INVALID_MODEL" in response.text
+
+def test_post_prints_with_invalid_label():
+    response = client.post(
+        "/prints/",
+        json = {
+            "label": "INVALID_LABEL"
+        }
+        )
+    assert response.status_code == 400
+    assert "INVALID_LABEL" in response.text

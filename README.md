@@ -55,6 +55,20 @@ pytest-watch
 pytest-watch -c # clear terminal before pytest runs
 ```
 
+#### Fake Brother QL TCP endpoint
+
+Just let `netcat` listen to port 9100:
+
+```sh
+while true; do nc -l -p 9100; done
+```
+
+Or on Windows with Docker:
+
+```sh
+docker run -p 9100:9100 -it --rm alpine /bin/sh -c "while true; do nc -l -p 9100; done"
+```
+
 ### Other
 
 #### Label identifiers and their resolution

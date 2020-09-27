@@ -115,7 +115,7 @@ def print_image(image_path: str, printer_model: str, label_type: str,
                                 printer_backend, printer_url, red, low_quality,
                                 high_dpi, compress)
     else:
-        raise Exception("BORTHER_QL_BACKEND must be 'API' or 'command'")
+        raise Exception("BROTHER_QL_BACKEND must be 'API' or 'command'")
 
     logger.debug(f'Printed image {image_path}')
     #return status

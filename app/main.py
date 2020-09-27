@@ -52,24 +52,6 @@ async def list_labels():
     logger.info("Got GET request on /labels/")
     return app.label.get_all()
 
-@fastapi.get("/prints/")
-async def list_prints():
-    """
-    List all created prints
-    TODO: list all prints ever made
-    """
-    logger.info("Got GET request on /prints/")
-    raise NotImplementedError
-
-@fastapi.get("/prints/{item_id}")
-async def get_print(item_id: int):
-    """
-    Get a print
-    TODO: get data about a print
-    """
-    logger.info(f"Got GET request on /prints/{id}")
-    raise NotImplementedError
-
 @fastapi.post("/prints/")
 async def post_prints(print: PrintRequest):
     """

@@ -3,13 +3,18 @@ from typing import Optional
 from pydantic import BaseModel
 import brother_ql
 import logging
+import logging.config
 import app.print
 import app.image
 import app.health
 import app.model
 import app.label
+import json
 
-logging.basicConfig(level=logging.DEBUG)
+with open('logging-config.json', 'rt') as loggingConfigFile:
+    loggingConfig = json.load(loggingConfigFile)
+    logging.config.dictConfig(loggingConfig)
+
 logger = logging.getLogger(__name__)
 
 

@@ -86,7 +86,6 @@ async def post_prints(print: PrintRequest):
                                                   label_width)
 
     # TODO: maybe check the image size to report back whether resizing was needed
-    # TODO: save print data to a dictionary or an actual database
 
     # send image to printer
     status = app.print.print_image(image_path=prepared_image_path,
@@ -98,5 +97,5 @@ async def post_prints(print: PrintRequest):
                                    low_quality=print.low_quality,
                                    high_dpi=print.high_dpi,
                                    compress=print.compress)
-    # TODO: report back some data (id, size, needed resize, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
+    # TODO: report back some data (size, needed resize, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
     return print

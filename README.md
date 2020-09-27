@@ -40,6 +40,12 @@ uvicorn app.main:fastapi --reload
 
 http://localhost:8000/docs or http://localhost:8000/redoc
 
+### Development
+
+#### Formatting
+
+`yapf` is used to format Python files. Use `yapf -p -r -i -e env .` on project root to format all files.
+
 ### Testing
 
 #### Run tests

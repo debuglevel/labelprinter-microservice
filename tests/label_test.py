@@ -1,6 +1,7 @@
 import pytest
 import app.label
 
+
 @pytest.mark.asyncio
 async def test_get_width():
     """
@@ -8,6 +9,7 @@ async def test_get_width():
     """
     assert app.label.get_width("29x90") == 306
     assert app.label.get_width("62") == 696
+
 
 @pytest.mark.asyncio
 async def test_list_labels():
@@ -17,6 +19,7 @@ async def test_list_labels():
     labels = app.label.get_all()
     assert "62" in labels
     assert "29x90" in labels
+
 
 @pytest.mark.asyncio
 async def test_is_valid():

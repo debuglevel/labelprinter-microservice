@@ -33,7 +33,8 @@ def prepare_image(image_path: str, image_mimetype: str, width: int):
     """
     Prepares an image for printing with brother_ql (i.e. converting, resizing).
     """
-    logger.debug(f'Preparing image {image_path}...')
+    image_size = os.path.getsize(image_path)
+    logger.debug(f'Preparing image {image_path} ({image_size} bytes)...')
 
     if image_mimetype == "image/svg+xml":
         raster_image_path = convert_svg_to_png(image_path, width)
@@ -42,7 +43,8 @@ def prepare_image(image_path: str, image_mimetype: str, width: int):
 
     resized_image_path = resize_image(raster_image_path, width)
 
-    logger.debug(f'Prepared image {image_path}: {resized_image_path}')
+    resized_image_size = os.path.getsize(resized_image_path)
+    logger.debug(f'Prepared image {image_path}: {resized_image_path} ({resized_image_size} bytes)')
     return resized_image_path
 
 def resize_image(image_path: str, destination_width: int):
@@ -61,7 +63,8 @@ def resize_image(image_path: str, destination_width: int):
     resized_image_path = image_file.name
     image.save(resized_image_path)
 
-    logger.debug(f'Resized image {image_path} to width={destination_width}: {resized_image_path}')
+    resized_image_size = os.path.getsize(image_file.name)
+    logger.debug(f'Resized image {image_path} to width={destination_width}: {resized_image_path} ({resized_image_size} bytes)')
     return resized_image_path
 
 def convert_svg_to_png(svg_image_path: str, width: int):
@@ -70,12 +73,13 @@ def convert_svg_to_png(svg_image_path: str, width: int):
     """
     logger.debug(f'Converting SVG {svg_image_path} to PNG...')
 
-    png_image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_', suffix='.png', delete=False)
+    png_image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_', suffix='converted_from_svg.png', delete=False)
     png_image_path = png_image_file.name
 
     # CAVEAT: output_width sometimes does not work (https://github.com/Kozea/CairoSVG/issues/164)
     svg2png(open(svg_image_path, 'rb').read(), write_to=png_image_file, output_width=width)
+    png_image_file.close() # needed, as svg2png does not seem to clsoe file
+
     png_image_size = os.path.getsize(png_image_path)
-    
-    logger.debug(f'Converted {svg_image_path} to {png_image_path} with resulting size {png_image_size}')
+    logger.debug(f'Converted {svg_image_path} to {png_image_path} ({png_image_size} bytes)')
     return png_image_path

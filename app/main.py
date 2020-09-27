@@ -63,7 +63,6 @@ async def list_labels():
 async def post_prints(print: PrintRequest):
     """
     Add a printing job
-    TODO: define proper HTTP status code
     """
     logger.info("Got POST request on /prints/")
 

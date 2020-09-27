@@ -24,8 +24,9 @@ async def test_prepare_image():
     Tests that images are prepared correctly
     """
     for image_path in [
+            "tests/resources/image.svg",
             "tests/resources/image_large.png",
-            "tests/resources/image_small.png", "tests/resources/image.svg",
+            "tests/resources/image_small.png", 
             "tests/resources/image_large.gif",
             "tests/resources/image_large.jpg",
             "tests/resources/image_large.webp",
@@ -34,7 +35,7 @@ async def test_prepare_image():
         #print(f"Current: {image_path}")
         mimetype = "image/svg+xml" if image_path.endswith(
             ".svg") else "image/*"
-        prepared_image_path = app.image.prepare_image(image_path, mimetype,
+        prepared_image_path, is_resized = app.image.prepare_image(image_path, mimetype,
                                                       100)
         assert os.path.exists(prepared_image_path)
         assert os.path.getsize(prepared_image_path) > 0
@@ -51,10 +52,15 @@ async def test_resize_image():
     """
     for image_path in [
             "tests/resources/image_large.png",
-            "tests/resources/image_small.png"
+            "tests/resources/image_small.png",
+            "tests/resources/image_large.gif",
+            "tests/resources/image_large.jpg",
+            "tests/resources/image_large.webp",
+            "tests/resources/image_large.bmp"
     ]:
         #print(f"Current: {image_path}")
-        resized_image_path = app.image.resize_image(image_path, 100)
+        resized_image_path, is_resized = app.image.resize_image(image_path, 100)
+        assert is_resized == True
         assert os.path.exists(resized_image_path)
         assert os.path.getsize(resized_image_path) > 0
 
@@ -62,6 +68,23 @@ async def test_resize_image():
         width, height = image.size
         assert width == 100
 
+@pytest.mark.asyncio
+async def test_resize_image_not_needed():
+    """
+    Tests that rastered images in correct dimensions are not resized
+    """
+    for image_path in [
+            "tests/resources/image.png"
+    ]:
+        #print(f"Current: {image_path}")
+        resized_image_path, is_resized = app.image.resize_image(image_path, 100)
+        assert is_resized == False
+        assert os.path.exists(resized_image_path)
+        assert os.path.getsize(resized_image_path) > 0
+
+        image = PIL.Image.open(resized_image_path)
+        width, height = image.size
+        assert width == 100
 
 @pytest.mark.skip(reason="fixed width conversion does not work")
 @pytest.mark.asyncio

@@ -46,13 +46,13 @@ def prepare_image(image_path: str, image_mimetype: str, width: int):
     else:
         raster_image_path = image_path
 
-    resized_image_path = resize_image(raster_image_path, width)
+    resized_image_path, is_resized = resize_image(raster_image_path, width)
 
     resized_image_size = os.path.getsize(resized_image_path)
     logger.debug(
         f'Prepared image {image_path}: {resized_image_path} ({resized_image_size} bytes)'
     )
-    return resized_image_path
+    return resized_image_path, is_resized
 
 
 def resize_image(image_path: str, destination_width: int):
@@ -65,22 +65,33 @@ def resize_image(image_path: str, destination_width: int):
     # see https://stackoverflow.com/a/451580/4764279
     image = Image.open(image_path)
     image_width = float(image.size[0])
-    destination_scaling = float(destination_width / image_width)
-    image_height = float(image.size[1])
-    destination_size = int(image_height * destination_scaling)
-    image = image.resize((destination_width, destination_size), Image.ANTIALIAS)
 
-    image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_',
-                                             suffix='.resized.png',
-                                             delete=False)
-    resized_image_path = image_file.name
-    image.save(resized_image_path)
+    if (image_width == destination_width):
+        logger.debug(f"Image width is already destination width {image_width}px. No resizing needed.")
+        is_resized = False
+        destination_image_path = image_path
+    else:
+        logger.debug(f"Image width is not destination width {image_width}px. Resizing...")
+        is_resized = True
 
-    resized_image_size = os.path.getsize(image_file.name)
+        destination_scaling = float(destination_width / image_width)
+        image_height = float(image.size[1])
+        destination_size = int(image_height * destination_scaling)
+        resized_image = image.resize((destination_width, destination_size), Image.ANTIALIAS)
+
+        resized_image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_',
+                                                suffix='.resized.png',
+                                                delete=False)
+        resized_image_path = resized_image_file.name
+        resized_image.save(resized_image_path)
+
+        destination_image_path = resized_image_path    
+
+    destination_image_size = os.path.getsize(destination_image_path)
     logger.debug(
-        f'Resized image {image_path} to width={destination_width}: {resized_image_path} ({resized_image_size} bytes)'
+        f'Resized image {image_path} to width={destination_width}: {destination_image_path} ({destination_image_size} bytes)'
     )
-    return resized_image_path
+    return destination_image_path, is_resized
 
 
 def convert_svg_to_png(svg_image_path: str, width: int):

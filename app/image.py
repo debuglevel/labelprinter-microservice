@@ -16,7 +16,7 @@ def download_image(image_url: str):
     logger.debug(f'Downloading image {image_url}...')
 
     image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_', suffix='.downloaded', delete=False)
-    logger.debug(f'Downloading {image_url} to {image_path.name}...')
+    logger.debug(f'Downloading {image_url} to {image_file.name}...')
 
     headers = {'Accept': 'image/svg+xml, image/png;q=0.9, image/*;q=0.8'}
     response = requests.get(image_url, headers=headers)
@@ -24,10 +24,10 @@ def download_image(image_url: str):
     image_file.close()
 
     image_mimetype = response.headers['content-type']
-    file_size = os.path.getsize(image_path.name)
+    file_size = os.path.getsize(image_file.name)
 
-    logger.debug(f'Downloaded {image_url} to {image_path.name} ({file_size} bytes)')
-    return image_path.name, image_mimetype
+    logger.debug(f'Downloaded {image_url} to {image_file.name} ({file_size} bytes)')
+    return image_file.name, image_mimetype
 
 def prepare_image(image_path: str, image_mimetype: str, width: int):
     """

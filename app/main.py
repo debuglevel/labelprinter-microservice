@@ -6,8 +6,10 @@ import logging
 import app.print
 import app.image
 import app.health
+import app.model
 import app.label
 
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 class PrintRequest(BaseModel):
@@ -19,6 +21,7 @@ class PrintRequest(BaseModel):
     compress: bool
     printer_url: str
     printer_model: str
+    printer_backend: str
     label_type: str
 
 fastapi = FastAPI()
@@ -85,7 +88,8 @@ async def post_prints(print: PrintRequest):
     image_path, image_mimetype = app.image.download_image(print.image_url)
     
     # prepare image to be sent to a label printer (TODO: maybe that would be better placed in print_image() itself)
-    prepared_image_path = app.image.prepare_image(image_path, image_mimetype, width)
+    label_width = app.label.get_width(print.label_type)
+    prepared_image_path = app.image.prepare_image(image_path, image_mimetype, label_width)
 
     # TODO: maybe check the image size to report back whether resizing was needed
     # TODO: save print data to a dictionary or an actual database

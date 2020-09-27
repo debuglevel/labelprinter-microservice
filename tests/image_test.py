@@ -1,17 +1,17 @@
 import pytest
-import app.main
+import app.image
 import os.path
 import PIL
 import magic
 
-@pytest.mark.skip(reason="slow")
+@pytest.mark.skip(reason="slow and needs connectivity")
 @pytest.mark.asyncio
 async def test_download_image():
     """
     Tests that an image is downloaded
     """
-    image_path = app.main.download_image("https://upload.wikimedia.org/wikipedia/commons/c/c3/Resistor_symbol_IEC.svg")
-    assert os.path.exists(image_path)
+    image_path, image_mimetype = app.image.download_image("https://upload.wikimedia.org/wikipedia/commons/c/c3/Resistor_symbol_IEC.svg")
+    assert os.path.exists(image_path) == True
     assert os.path.getsize(image_path) > 0
 
 @pytest.mark.asyncio

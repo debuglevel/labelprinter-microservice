@@ -25,6 +25,10 @@ class AddPrintRequest(BaseModel):
     printer_backend: str
     label_type: str
 
+class AddPrintResponse(BaseModel):
+    label_width: int
+    needed_resize: bool
+    image_mimetype: str
 
 fastapi = FastAPI()
 
@@ -94,5 +98,7 @@ async def post_prints(addPrintRequest: AddPrintRequest):
                                    low_quality=addPrintRequest.low_quality,
                                    high_dpi=addPrintRequest.high_dpi,
                                    compress=addPrintRequest.compress)
-    # TODO: report back some data (size, needed resize, original size, new size, original data like label, model, etc). No idea if we should block. Maybe add a "blocking" attribute to JSON to choose that.
-    return addPrintRequest
+
+    addPrintResponse = AddPrintResponse(**{"needed_resize": is_resized, "image_mimetype": image_mimetype, "label_width": label_width})
+
+    return addPrintResponse

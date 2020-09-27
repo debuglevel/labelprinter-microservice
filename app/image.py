@@ -64,9 +64,11 @@ def resize_image(image_path: str, destination_width: int):
 
     # see https://stackoverflow.com/a/451580/4764279
     image = Image.open(image_path)
-    wpercent = (destination_width / float(image.size[0]))
-    hsize = int((float(image.size[1]) * float(wpercent)))
-    image = image.resize((destination_width, hsize), Image.ANTIALIAS)
+    image_width = float(image.size[0])
+    destination_scaling = float(destination_width / image_width)
+    image_height = float(image.size[1])
+    destination_size = int(image_height * destination_scaling)
+    image = image.resize((destination_width, destination_size), Image.ANTIALIAS)
 
     image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_',
                                              suffix='.resized.png',

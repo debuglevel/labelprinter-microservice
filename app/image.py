@@ -67,25 +67,29 @@ def resize_image(image_path: str, destination_width: int):
     image_width = float(image.size[0])
 
     if (image_width == destination_width):
-        logger.debug(f"Image width is already destination width {image_width}px. No resizing needed.")
+        logger.debug(
+            f"Image width is already destination width {image_width}px. No resizing needed."
+        )
         is_resized = False
         destination_image_path = image_path
     else:
-        logger.debug(f"Image width is not destination width {image_width}px. Resizing...")
+        logger.debug(
+            f"Image width is not destination width {image_width}px. Resizing..."
+        )
         is_resized = True
 
         destination_scaling = float(destination_width / image_width)
         image_height = float(image.size[1])
         destination_size = int(image_height * destination_scaling)
-        resized_image = image.resize((destination_width, destination_size), Image.ANTIALIAS)
+        resized_image = image.resize((destination_width, destination_size),
+                                     Image.ANTIALIAS)
 
-        resized_image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_',
-                                                suffix='.resized.png',
-                                                delete=False)
+        resized_image_file = tempfile.NamedTemporaryFile(
+            prefix='labelprinter_', suffix='.resized.png', delete=False)
         resized_image_path = resized_image_file.name
         resized_image.save(resized_image_path)
 
-        destination_image_path = resized_image_path    
+        destination_image_path = resized_image_path
 
     destination_image_size = os.path.getsize(destination_image_path)
     logger.debug(

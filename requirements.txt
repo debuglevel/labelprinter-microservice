@@ -1,7 +1,8 @@
 # TODO: add versions.
 # TODO: remove stuff which is probably not needed
 fastapi
-uvicorn
+uvicorn==0.12.0
+pyyaml # at least needed by uvicorn --log-config *.yaml
 brother_ql==0.9.3
 cairosvg
 requests

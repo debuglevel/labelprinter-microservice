@@ -9,12 +9,7 @@ import app.image
 import app.health
 import app.model
 import app.label
-import ruamel.yaml as yaml
 
-
-with open('logging-config.yaml', 'rt') as loggingConfigFile:
-    loggingConfig = yaml.safe_load(loggingConfigFile.read())
-    logging.config.dictConfig(loggingConfig)
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +39,8 @@ fastapi = FastAPI()
 @fastapi.on_event("startup")
 async def startup_event():
     logger.info("Starting up...")
-    logger.info("Sample INFO log message")
-    logger.debug("Sample DEBUG log message")
+    #logger.info("Sample INFO log message")
+    #logger.debug("Sample DEBUG log message")
 
 
 @fastapi.get("/")

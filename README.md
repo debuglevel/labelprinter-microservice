@@ -31,7 +31,7 @@ pip install -r requirements.txt
 #### Start development mode
 
 ```sh
-uvicorn app.main:fastapi --reload
+uvicorn app.main:fastapi --reload --log-config logging-config.yaml
 ```
 
 ### Documentation

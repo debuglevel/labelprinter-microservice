@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def get_label_legacy_structures():
     """
     This is a slim variant of the legacy brother_ql.devicedependent interface: https://github.com/pklaus/brother_ql/blob/638b365d45421696e1c2cd26952093d68f87155b/brother_ql/devicedependent.py
@@ -12,8 +13,8 @@ def get_label_legacy_structures():
     label_type_specs = {}
 
     from brother_ql.labels import LabelsManager
-    lm = LabelsManager()
-    for label in lm.iter_elements():
+    labelsManager = LabelsManager()
+    for label in labelsManager.iter_elements():
         l = {}
         l['name'] = label.name
         l['kind'] = label.form_factor
@@ -27,6 +28,7 @@ def get_label_legacy_structures():
         label_type_specs[label.identifier] = l
 
     return label_type_specs
+
 
 def get_width(label: str):
     """
@@ -52,5 +54,6 @@ def get_all():
 def is_valid(label: str):
     logger.debug(f"Checking if {label} is a supported label type...")
     is_supported = label in get_all()
-    logger.debug(f"Checked if {label} is a supported label type: {is_supported}")
+    logger.debug(
+        f"Checked if {label} is a supported label type: {is_supported}")
     return is_supported

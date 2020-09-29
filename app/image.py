@@ -19,7 +19,7 @@ def download_image(image_url: str):
     image_file = tempfile.NamedTemporaryFile(prefix='labelprinter_',
                                              suffix='.downloaded',
                                              delete=False)
-                                             
+
     logger.debug(f'Downloading {image_url} to {image_file.name}...')
     headers = {'Accept': 'image/svg+xml, image/png;q=0.9, image/*;q=0.8'}
     response = requests.get(image_url, headers=headers)

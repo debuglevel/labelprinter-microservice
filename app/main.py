@@ -12,7 +12,7 @@ import app.label
 import ruamel.yaml as yaml
 
 
-with open('logging-config.json', 'rt') as loggingConfigFile:
+with open('logging-config.yaml', 'rt') as loggingConfigFile:
     loggingConfig = yaml.safe_load(loggingConfigFile.read())
     logging.config.dictConfig(loggingConfig)
 

@@ -2,6 +2,8 @@
 #       But python-dev cannot be installed via apk as it might not be available in the corresponding version (or things get installed in the wrong way anyway).
 #       Therefore we set up python ourselves.
 
+# TODO: actually it just might not be a good idea to use a alpine image for Python, because wheels cannot be used
+
 # Download and compile (where necessary) python dependencies in a venv in this stage
 FROM alpine:3.12 as builder
 

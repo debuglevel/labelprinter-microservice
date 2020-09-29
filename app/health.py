@@ -9,4 +9,5 @@ class Health(BaseModel):
 
 
 def get_health():
+    logger.debug("Getting health...")
     return Health(status="up")

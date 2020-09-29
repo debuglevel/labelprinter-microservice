@@ -37,7 +37,14 @@ class AddPrintResponse(BaseModel):
     image_mimetype: str
 
 
+
 fastapi = FastAPI()
+
+@fastapi.on_event("startup")
+async def startup_event():
+    logger.info("Starting up...")
+    logger.info("Sample INFO log message")
+    logger.debug("Sample DEBUG log message")
 
 
 @fastapi.get("/")

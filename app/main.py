@@ -10,7 +10,6 @@ import app.health
 import app.model
 import app.label
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -33,8 +32,8 @@ class AddPrintResponse(BaseModel):
     image_mimetype: str
 
 
-
 fastapi = FastAPI()
+
 
 @fastapi.on_event("startup")
 async def startup_event():

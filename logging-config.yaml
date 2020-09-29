@@ -4,7 +4,7 @@ disable_existing_loggers: false
 formatters:
   notinsane:
     class: logging.Formatter
-    style: "{"
+    style: "{" # use {} template syntax instead of %()
     datefmt: "%Y-%m-%dT%H:%M:%S%z" # ISO-8601 compliant
     format: "{asctime:s} {threadName:s} {levelname:s} {name:s}|{funcName:s}():{lineno:d} - {message:s}"
 

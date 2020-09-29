@@ -4,4 +4,9 @@ services:
     build: .
     image: labelprinter-microservice
     ports:
-      - "80:8000"
+      - "8000:8000"
+  fake_brother:
+    image: alpine:3.12
+    command: /bin/sh -c "while true; do nc -l -p 9100; done"
+    ports:
+      - 9100:9100

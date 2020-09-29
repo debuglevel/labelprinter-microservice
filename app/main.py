@@ -9,10 +9,11 @@ import app.image
 import app.health
 import app.model
 import app.label
-import json
+import ruamel.yaml as yaml
+
 
 with open('logging-config.json', 'rt') as loggingConfigFile:
-    loggingConfig = json.load(loggingConfigFile)
+    loggingConfig = yaml.safe_load(loggingConfigFile.read())
     logging.config.dictConfig(loggingConfig)
 
 logger = logging.getLogger(__name__)

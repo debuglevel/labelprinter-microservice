@@ -6,6 +6,7 @@ brother_ql==0.9.3
 cairosvg
 requests
 Pillow==7.2.0
+ruamel.yaml==0.16.12
 #str2bool==1.1
 #sqlalchemy
 #async-exit-stack

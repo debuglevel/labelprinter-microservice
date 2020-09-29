@@ -1,11 +1,11 @@
 # TODO: add versions.
 # TODO: remove stuff which is probably not needed
-fastapi
+fastapi==0.61.1
 uvicorn==0.12.0
-pyyaml # at least needed by uvicorn --log-config *.yaml
+PyYAML==5.3.1 # at least needed by uvicorn --log-config *.yaml
 brother_ql==0.9.3
-cairosvg
-requests
+CairoSVG==2.4.2
+requests==2.24.0
 Pillow==7.2.0
 ruamel.yaml==0.16.12
 #str2bool==1.1

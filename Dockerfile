@@ -1,5 +1,5 @@
-# NOTE: We do not use the python:xyz image because it lacks the corresponding python-dev package.
-#       But python-dev cannot be installed via apk as it might not be available in the cirresponding version (or things get installed in the wrong way anyway).
+# NOTE: We do not use the python:3.x-alpine image because it lacks the corresponding python-dev package.
+#       But python-dev cannot be installed via apk as it might not be available in the corresponding version (or things get installed in the wrong way anyway).
 #       Therefore we set up python ourselves.
 
 FROM alpine:3.12

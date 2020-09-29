@@ -3,7 +3,7 @@
 fastapi==0.61.1
 uvicorn==0.12.0
 PyYAML==5.3.1 # at least needed by uvicorn --log-config *.yaml
-brother_ql==0.9.3
+brother_ql==0.9.4
 CairoSVG==2.4.2
 requests==2.24.0
 Pillow==7.2.0

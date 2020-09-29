@@ -83,12 +83,12 @@ async def post_prints(addPrintRequest: AddPrintRequest):
     if app.model.is_valid(addPrintRequest.printer_model) == False:
         raise HTTPException(
             status_code=400,
-            detail=f"printer model '{addPrintRequest.printer_model}' is invalid"
+            detail=f"printer model '{addPrintRequest.printer_model}' is not supported"
         )
     if app.label.is_valid(addPrintRequest.label_type) == False:
         raise HTTPException(
             status_code=400,
-            detail=f"label type '{addPrintRequest.label_type}' is invalid")
+            detail=f"label type '{addPrintRequest.label_type}' is not supported")
 
     # download image to temporary file
     image_path, image_mimetype = app.image.download_image(

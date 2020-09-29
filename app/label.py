@@ -18,9 +18,15 @@ def get_width(label: str):
 
 
 def get_all():
+    logger.debug(f"Getting all label types...")
     # TODO: use brother_ql.labels instead of deprecated brother_ql.devicedependent
-    return brother_ql.devicedependent.label_type_specs
+    labels = brother_ql.devicedependent.label_type_specs
+    logger.debug(f"Got all label types")
+    return labels
 
 
 def is_valid(label: str):
-    return label in get_all()
+    logger.debug(f"Checking if {label} is a supported label type...")
+    is_supported = label in get_all()
+    logger.debug(f"Checked if {label} is a supported label type: {is_supported}")
+    return is_supported

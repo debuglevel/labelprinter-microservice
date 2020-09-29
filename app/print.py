@@ -25,8 +25,6 @@ def build_print_command(image_path: str, printer_model: str, label_type: str,
     high_dpi_param = '--600dpi' if high_dpi else None
     compress_param = '--compress' if compress else None
 
-    # TODO: maybe call from library instead of subprocess
-    # TODO: maybe brother_ql can read PIL Image instead of files; would prevent writing files
     command = [
         '/usr/bin/brother_ql', '--backend', printer_backend, '--model',
         printer_model, '--printer', printer_url, 'print', red_param,
@@ -60,6 +58,8 @@ def call_print_api(image_path: str, printer_model: str, label_type: str,
     """
     Prints an image by calling the brother_ql python API
     """
+    logger.debug(f'Printing via brother_ql library...')
+
     raster = BrotherQLRaster(printer_model)
     raster.exception_on_warning = True
 
@@ -70,6 +70,7 @@ def call_print_api(image_path: str, printer_model: str, label_type: str,
     dither = False
     image_paths = [image_path]
     logger.debug(f"Converting image {image_path} to printing instructions...")
+    # TODO: maybe brother_ql can read PIL Image instead of files; would prevent writing files
     instructions = convert(qlr=raster,
                            images=image_paths,
                            label=label_type,

@@ -13,7 +13,7 @@ handlers:
     class: logging.StreamHandler
     level: DEBUG
     formatter: notinsane
-    stream: ext://sys.stderr
+    stream: ext://sys.stdout
 
 root:
   handlers:

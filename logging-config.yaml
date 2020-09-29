@@ -1,3 +1,5 @@
+# According to https://12factor.net/logs, logs should just be written to stdout (i.e. no files, no rotation, no buffering). This logging configuration implements this suggestion.
+
 version: 1
 disable_existing_loggers: false # if absent, this parameter defaults to true
 incremental: false # incremental - whether the configuration is to be interpreted as incremental to the existing configuration. This value defaults to False.

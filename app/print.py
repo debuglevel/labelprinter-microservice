@@ -7,8 +7,8 @@ import os
 
 logger = logging.getLogger(__name__)
 
-BORTHER_QL_BACKEND = "API"
-#BORTHER_QL_BACKEND = "command"
+BROTHER_QL_BACKEND = "API"
+#BROTHER_QL_BACKEND = "command"
 
 
 def build_print_command(image_path: str, printer_model: str, label_type: str,
@@ -106,12 +106,12 @@ def print_image(image_path: str, printer_model: str, label_type: str,
     """
     logger.debug(f'Printing image {image_path}...')
 
-    if BORTHER_QL_BACKEND == "command":
+    if BROTHER_QL_BACKEND == "command":
         command = build_print_command(image_path, printer_model, label_type,
                                       printer_backend, printer_url, red,
                                       low_quality, high_dpi, compress)
         run_print_command(command)
-    elif BORTHER_QL_BACKEND == "API":
+    elif BROTHER_QL_BACKEND == "API":
         status = call_print_api(image_path, printer_model, label_type,
                                 printer_backend, printer_url, red, low_quality,
                                 high_dpi, compress)

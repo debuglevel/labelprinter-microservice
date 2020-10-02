@@ -68,13 +68,13 @@ def resize_image(image_path: str, destination_width: int):
 
     if (image_width == destination_width):
         logger.debug(
-            f"Image width is already destination width {image_width}px. No resizing needed."
+            f"Image width {image_width}px is already destination width {destination_width}px. No resizing needed."
         )
         is_resized = False
         destination_image_path = image_path
     else:
         logger.debug(
-            f"Image width is not destination width {image_width}px. Resizing..."
+            f"Image width {image_width}px is not destination width {destination_width}px. Resizing..."
         )
         is_resized = True
 

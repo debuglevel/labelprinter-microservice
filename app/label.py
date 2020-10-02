@@ -52,8 +52,8 @@ def get_all():
 
 
 def is_valid(label: str):
-    logger.debug(f"Checking if {label} is a supported label type...")
+    logger.debug(f"Checking if '{label}' is a supported label type...")
     is_supported = label in get_all()
     logger.debug(
-        f"Checked if {label} is a supported label type: {is_supported}")
+        f"Checked if '{label}' is a supported label type: {is_supported}")
     return is_supported

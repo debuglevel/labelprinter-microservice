@@ -92,11 +92,26 @@ def resize_image(image_path: str, destination_width: int):
         destination_image_path = resized_image_path
 
     destination_image_size = os.path.getsize(destination_image_path)
+    image_width, image_height = get_size(destination_image_path)
     logger.debug(
-        f'Resized image {image_path} to width={destination_width}: {destination_image_path} ({destination_image_size} bytes)'
+        f'Resized image {image_path} to width={destination_width}: (Width={image_width} Height={image_height}) {destination_image_path} ({destination_image_size} bytes)'
     )
     return destination_image_path, is_resized
 
+
+def get_size(image_path: str):
+    """
+    Getting the size of an image as (width, height)-tuple
+    """
+
+    logger.debug(f'Getting size of {image_path}...')
+
+    # see https://stackoverflow.com/a/451580/4764279
+    image = Image.open(image_path)
+    image_width, image_height = image.size
+
+    logger.debug(f'Got size of {image_path}: Width={image_width}px Height={image_height}px')
+    return image_width, image_height
 
 def convert_svg_to_png(svg_image_path: str, width: int):
     """

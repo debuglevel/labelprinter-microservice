@@ -28,8 +28,8 @@ def get_all():
 
 
 def is_valid(model: str):
-    logger.debug(f"Checking if {model} is a supported printer model...")
+    logger.debug(f"Checking if '{model}' is a supported printer model...")
     is_supported = model in get_all()
     logger.debug(
-        f"Checked if {model} is a supported printer model: {is_supported}")
+        f"Checked if '{model}' is a supported printer model: {is_supported}")
     return is_supported

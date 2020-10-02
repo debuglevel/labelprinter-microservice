@@ -26,7 +26,7 @@ def build_print_command(image_path: str, printer_model: str, label_type: str,
     compress_param = '--compress' if compress else None
 
     command = [
-        '/usr/bin/brother_ql', '--backend', printer_backend, '--model',
+        'brother_ql', '--backend', printer_backend, '--model',
         printer_model, '--printer', printer_url, 'print', red_param,
         low_quality_param, high_dpi_param, compress_param, '--label',
         label_type, image_path

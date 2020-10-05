@@ -2,6 +2,12 @@
 
 This is a microservice which wraps around the `brother_ql` python library. It basically consumes a JSON pointing to a image file to print it on a Brother QL printer.
 
+## Caveats
+
+### red label
+
+If the label *can* be printed with red color, `'red': true` *MUST* be set. Otherwise the printer will report a wrong defined label type.
+
 ## Cheat sheet
 
 ### Environment

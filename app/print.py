@@ -87,12 +87,12 @@ def call_print_api(image_path: str, printer_model: str, label_type: str,
     )
 
     blocking = True
-    logger.debug(f"Sending printing instructions to printer...")
+    logger.debug(f"Sending printing instructions to printer '{printer_url}' via '{printer_backend}' backend...")
     status = send(instructions=instructions,
                   printer_identifier=printer_url,
                   backend_identifier=printer_backend,
                   blocking=blocking)
-    logger.debug(f"Sent printing instructions to printer: {status}")
+    logger.debug(f"Sent printing instructions to printer '{printer_url}' via '{printer_backend}' backend: {status}")
 
     return status  # CAVEAT: network backend does not support readback according to brother_ql internals
 
